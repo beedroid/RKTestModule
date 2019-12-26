@@ -1,0 +1,16 @@
+PODS:
+  - RKTestModule (0.1.0)
+
+DEPENDENCIES:
+  - RKTestModule (from `../`)
+
+EXTERNAL SOURCES:
+  RKTestModule:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  RKTestModule: 7b52435f8754e161a3c8a7b351e40028d0d572de
+
+PODFILE CHECKSUM: 428a2a3de2ed652d8a9944ea192c5214c29fc6fa
+
+COCOAPODS: 1.8.4

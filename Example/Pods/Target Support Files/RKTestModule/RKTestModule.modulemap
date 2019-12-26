@@ -1,0 +1,6 @@
+framework module RKTestModule {
+  umbrella header "RKTestModule-umbrella.h"
+
+  export *
+  module * { export * }
+}
