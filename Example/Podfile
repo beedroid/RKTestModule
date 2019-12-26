@@ -4,7 +4,12 @@ platform :ios, '8.0'
 
 target 'RKTestModule_Example' do
   pod 'RKTestModule', :path => '../'
-
+  pod 'AFNetworking'
+  pod 'Masonry'
+  pod 'JLRoutes'
+  pod 'JSONModel'
+  pod 'MBProgressHUD'
+  
   target 'RKTestModule_Tests' do
     inherit! :search_paths
 

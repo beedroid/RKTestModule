@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "RKTestViewController.h"
 
 FOUNDATION_EXPORT double RKTestModuleVersionNumber;
 FOUNDATION_EXPORT const unsigned char RKTestModuleVersionString[];

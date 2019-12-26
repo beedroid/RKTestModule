@@ -7,6 +7,9 @@
 //
 
 #import "RKViewController.h"
+#import <RKTestModule/RKTestViewController.h>
+#import <AFNetworking/AFNetworking.h>
+#import <JLRoutes/JLRoutes.h>
 
 @interface RKViewController ()
 
@@ -18,6 +21,19 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(100, 100, 100, 50);
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button setTitle:@"click" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(c)  forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+}
+
+- (void)c{
+    RKTestViewController * vc = [[RKTestViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:^{
+        NSLog(@"success");
+    }];
 }
 
 - (void)didReceiveMemoryWarning

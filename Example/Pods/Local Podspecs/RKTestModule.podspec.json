@@ -18,5 +18,23 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "RKTestModule/Classes/**/*"
+  "source_files": "RKTestModule/Classes/**/*",
+  "public_header_files": "Pod/Classes/**/*.h",
+  "dependencies": {
+    "AFNetworking": [
+
+    ],
+    "Masonry": [
+
+    ],
+    "JLRoutes": [
+
+    ],
+    "JSONModel": [
+
+    ],
+    "MBProgressHUD": [
+
+    ]
+  }
 }
