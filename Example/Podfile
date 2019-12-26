@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '8.0'
+
+target 'RKTestModule_Example' do
+  pod 'RKTestModule', :path => '../'
+
+  target 'RKTestModule_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
