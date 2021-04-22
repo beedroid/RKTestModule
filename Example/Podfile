@@ -1,14 +1,61 @@
 use_frameworks!
 
-platform :ios, '8.0'
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://git.coding.net/CocoaPods/Specs.git'
+source 'https://github.com/beedroid/koomee_RK_specs.git'
+
+platform :ios, '9.0'
 
 target 'RKTestModule_Example' do
   pod 'RKTestModule', :path => '../'
-  pod 'AFNetworking'
-  pod 'Masonry'
-  pod 'JLRoutes'
-  pod 'JSONModel'
-  pod 'MBProgressHUD'
+  pod 'RKBaseModule'
+  pod 'SDWebImage', '4.2.3'
+  pod 'CocoaLumberjack'
+  # 列表空数据提示
+  pod 'DZNEmptyDataSet'
+#  pod 'Firebase/Analytics'
+#  pod 'FirebaseUI'
+#  pod 'Firebase/Database'
+  pod 'CocoaAsyncSocket'
+
+  
+  # UI组件
+  pod 'QMUIKit', '4.0.4'
+
+#   相册
+#  pod 'YBImageBrowser'
+#  # 日历组件
+#  pod 'PDTSimpleCalendar'
+#  # 颜色框架
+#  pod 'ChameleonFramework'
+#  # appstore评分
+#  pod 'iRate'
+#  # GameCenter
+#  pod 'GameCenterManager'
+#  # 侧边栏
+#  pod 'PKRevealController'
+#  # 自定义的文本输入控件
+#  pod 'SlackTextViewController'
+#  # 提供很多种预先定义好的cell
+#  pod 'RETableViewManager'
+#  # 向用户获取设备权限提示
+#  pod 'PermissionScope'
+#  # HUD
+#  pod 'SVProgressHUD'
+#  # awesome font
+#  pod 'FontAwesomeKit'
+#  # cell滑动动画
+#  pod 'MGSwipeTableCell'
+#  # IAP
+#  pod 'IAPHelper'
+#  # APP内加载自定义字体
+#  pod 'FontBlaster'
+#  # 交叉推销，更多下载
+#  pod 'TAPromotee'
+#  # 大图加载，渐变动画
+#  pod 'Concorde'
+#  # keychain权限获取
+#  pod 'KeychainAccess'
   
   target 'RKTestModule_Tests' do
     inherit! :search_paths
@@ -16,3 +63,4 @@ target 'RKTestModule_Example' do
     
   end
 end
+

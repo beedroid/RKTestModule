@@ -155,26 +155,19 @@ Note: the angle brackets after `NSArray` contain a protocol. This is not the
 same as the Objective-C generics system. They are not mutually exclusive, but
 for JSONModel to work, the protocol must be in place.
 
-Also property can have generics info for compiler
-```objc
-@interface OrderModel : JSONModel
-@property (nonatomic) NSInteger orderId;
-@property (nonatomic) float totalPrice;
-@property (nonatomic) NSArray<ProductModel *> <ProductModel> *products;
-@end
-```
-
 ### Nested key mapping
 
 ```json
 {
 	"orderId": 104,
-	"orderDetails": {
-		"name": "Product #1",
-		"price": {
-			"usd": 12.95
+	"orderDetails": [
+		{
+			"name": "Product #1",
+			"price": {
+				"usd": 12.95
+			}
 		}
-	}
+	]
 }
 ```
 
@@ -303,7 +296,7 @@ NSString *string = [pm toJSONString];
 ### Custom data transformers
 
 ```objc
-@interface JSONValueTransformer (CustomTransformer)
+@interface JSONValueTransformer (CustomNSDate)
 @end
 
 @implementation JSONValueTransformer (CustomTransformer)

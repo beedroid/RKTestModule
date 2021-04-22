@@ -21,9 +21,6 @@
   "source_files": "RKTestModule/Classes/**/*",
   "public_header_files": "Pod/Classes/**/*.h",
   "dependencies": {
-    "AFNetworking": [
-
-    ],
     "Masonry": [
 
     ],

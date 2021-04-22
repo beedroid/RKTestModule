@@ -53,7 +53,6 @@ static JSONKeyMapper* globalKeyMapper = nil;
 
             allowedPrimitiveTypes = @[
                 @"BOOL", @"float", @"int", @"long", @"double", @"short",
-                @"unsigned int", @"usigned long", @"long long", @"unsigned long long", @"unsigned short", @"char", @"unsigned char",
                 //and some famous aliases
                 @"NSInteger", @"NSUInteger",
                 @"Block"
@@ -450,24 +449,30 @@ static JSONKeyMapper* globalKeyMapper = nil;
 
                     //check if there's a transformer with that name
                     if (foundCustomTransformer) {
-                        IMP imp = [valueTransformer methodForSelector:selector];
-                        id (*func)(id, SEL, id) = (void *)imp;
-                        jsonValue = func(valueTransformer, selector, jsonValue);
 
-                        if (![jsonValue isEqual:[self valueForKey:property.name]])
-                            [self setValue:jsonValue forKey:property.name];
-                    } else {
-                        if (err) {
-                            NSString* msg = [NSString stringWithFormat:@"%@ type not supported for %@.%@", property.type, [self class], property.name];
-                            JSONModelError* dataErr = [JSONModelError errorInvalidDataWithTypeMismatch:msg];
-                            *err = [dataErr errorByPrependingKeyPathComponent:property.name];
+                        //it's OK, believe me...
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                        //transform the value
+                        jsonValue = [valueTransformer performSelector:selector withObject:jsonValue];
+#pragma clang diagnostic pop
+
+                        if (![jsonValue isEqual:[self valueForKey:property.name]]) {
+                            [self setValue:jsonValue forKey: property.name];
                         }
+
+                    } else {
+                        NSString* msg = [NSString stringWithFormat:@"%@ type not supported for %@.%@", property.type, [self class], property.name];
+                        JSONModelError* dataErr = [JSONModelError errorInvalidDataWithTypeMismatch:msg];
+                        *err = [dataErr errorByPrependingKeyPathComponent:property.name];
                         return NO;
                     }
+
                 } else {
                     // 3.4) handle "all other" cases (if any)
-                    if (![jsonValue isEqual:[self valueForKey:property.name]])
-                        [self setValue:jsonValue forKey:property.name];
+                    if (![jsonValue isEqual:[self valueForKey:property.name]]) {
+                        [self setValue:jsonValue forKey: property.name];
+                    }
                 }
             }
         }
@@ -565,6 +570,12 @@ static JSONKeyMapper* globalKeyMapper = nil;
             //ignore read-only properties
             if ([attributeItems containsObject:@"R"]) {
                 continue; //to next property
+            }
+
+            //check for 64b BOOLs
+            if ([propertyAttributes hasPrefix:@"Tc,"]) {
+                //mask BOOLs as structs so they can have custom converters
+                p.structName = @"BOOL";
             }
 
             scanner = [NSScanner scannerWithString: propertyAttributes];
@@ -912,7 +923,7 @@ static JSONKeyMapper* globalKeyMapper = nil;
 }
 
 //exports the model as a dictionary of JSON compliant objects
-- (NSDictionary *)toDictionaryWithKeys:(NSArray <NSString *> *)propertyNames
+-(NSDictionary*)toDictionaryWithKeys:(NSArray*)propertyNames
 {
     NSArray* properties = [self __properties__];
     NSMutableDictionary* tempDictionary = [NSMutableDictionary dictionaryWithCapacity:properties.count];
@@ -1006,12 +1017,17 @@ static JSONKeyMapper* globalKeyMapper = nil;
 
                 //check if there's a transformer declared
                 if (foundCustomTransformer) {
-                    IMP imp = [valueTransformer methodForSelector:selector];
-                    id (*func)(id, SEL, id) = (void *)imp;
-                    value = func(valueTransformer, selector, value);
 
-                    [tempDictionary setValue:value forKeyPath:keyPath];
+                    //it's OK, believe me...
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                    value = [valueTransformer performSelector:selector withObject:value];
+#pragma clang diagnostic pop
+
+                    [tempDictionary setValue:value forKeyPath: keyPath];
+
                 } else {
+
                     //in this case most probably a custom property was defined in a model
                     //but no default reverse transformer for it
                     @throw [NSException exceptionWithName:@"Value transformer not found"
@@ -1027,7 +1043,7 @@ static JSONKeyMapper* globalKeyMapper = nil;
 }
 
 //exports model to a dictionary and then to a JSON string
-- (NSData *)toJSONDataWithKeys:(NSArray <NSString *> *)propertyNames
+-(NSData*)toJSONDataWithKeys:(NSArray*)propertyNames
 {
     NSData* jsonData = nil;
     NSError* jsonError = nil;
@@ -1046,7 +1062,7 @@ static JSONKeyMapper* globalKeyMapper = nil;
     return jsonData;
 }
 
-- (NSString *)toJSONStringWithKeys:(NSArray <NSString *> *)propertyNames
+-(NSString*)toJSONStringWithKeys:(NSArray*)propertyNames
 {
     return [[NSString alloc] initWithData: [self toJSONDataWithKeys: propertyNames]
                                  encoding: NSUTF8StringEncoding];
@@ -1147,9 +1163,7 @@ static JSONKeyMapper* globalKeyMapper = nil;
         }
         else
         {
-            if (err) {
-                *err = [JSONModelError errorInvalidDataWithTypeMismatch:@"Only dictionaries and arrays are supported"];
-            }
+            *err = [JSONModelError errorInvalidDataWithTypeMismatch:@"Only dictionaries and arrays are supported"];
             return nil;
         }
     }

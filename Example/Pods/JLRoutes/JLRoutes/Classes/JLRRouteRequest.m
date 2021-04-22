@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2017, Joel Levin
+ Copyright (c) 2016, Joel Levin
  All rights reserved.
  
  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -15,29 +15,22 @@
 
 @interface JLRRouteRequest ()
 
-@property (nonatomic, copy) NSURL *URL;
+@property (nonatomic, strong) NSURL *URL;
 @property (nonatomic, strong) NSArray *pathComponents;
 @property (nonatomic, strong) NSDictionary *queryParams;
-@property (nonatomic, assign) JLRRouteRequestOptions options;
-@property (nonatomic, copy) NSDictionary *additionalParameters;
 
 @end
 
 
 @implementation JLRRouteRequest
 
-- (instancetype)initWithURL:(NSURL *)URL options:(JLRRouteRequestOptions)options additionalParameters:(nullable NSDictionary *)additionalParameters
+- (instancetype)initWithURL:(NSURL *)URL
 {
     if ((self = [super init])) {
         self.URL = URL;
-        self.options = options;
-        self.additionalParameters = additionalParameters;
-        
-        BOOL treatsHostAsPathComponent = ((options & JLRRouteRequestOptionTreatHostAsPathComponent) == JLRRouteRequestOptionTreatHostAsPathComponent);
         
         NSURLComponents *components = [NSURLComponents componentsWithString:[self.URL absoluteString]];
-        
-        if (components.host.length > 0 && (treatsHostAsPathComponent || (![components.host isEqualToString:@"localhost"] && [components.host rangeOfString:@"."].location == NSNotFound))) {
+        if (components.host.length > 0 && ![components.host isEqualToString:@"localhost"]) {
             // convert the host to "/" so that the host is considered a path component
             NSString *host = [components.percentEncodedHost copy];
             components.host = @"/";
