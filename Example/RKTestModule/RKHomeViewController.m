@@ -8,7 +8,6 @@
 
 #import "RKHomeViewController.h"
 #import <RKBaseModule/RKGlobal.h>
-#import <QMUIKit/QMUIKit.h>
 
 @interface RKHomeViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSArray *dataArray;
@@ -22,24 +21,21 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     self.dataArray = @[@"Runloop", @"Memory", @"Runtime",
-                       @"NSCache", @"UIKit", @"CALayer",
+                       @"NSCache", @"UIKit",
+                       @"CALayer",
                        @"Block", @"CrashAL", @"Shooter",
                        @"Network", @"Socket", @"Response",
-                       @"Table", @"Thread"];
+                       @"Table", @"Thread", @"ObjectTest",
+                       @"YogaKit"];
+    
+    
+    self.title = @"首页";
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStyleGrouped];
     tableView.delegate = self;
     tableView.dataSource = self;
     [self.view addSubview:tableView];
 }
-
-- (void)setupNavigationItems {
-    [super setupNavigationItems];
-    self.title = @"首页";
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem qmui_itemWithImage:UIImageMake(@"icon_nav_about") target:self action:@selector(handleAboutItemEvent)];
-    AddAccessibilityLabel(self.navigationItem.rightBarButtonItem, @"打开关于界面");
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

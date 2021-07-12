@@ -9,6 +9,7 @@
 #import "RKTableViewController.h"
 #import <RKBaseModule/RKGlobal.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/SDWebImageManager.h>
 
 @interface RKTableViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
@@ -24,17 +25,17 @@
     // 创建数据源
     NSMutableArray *picList = [[NSMutableArray alloc] init];
     for (int i=0; i<100; i++) {
-        NSString *picUrl = [NSString stringWithFormat:@"https://picsum.photos/seed/%d/200/300", arc4random() % 100];
+        NSString *picUrl = [NSString stringWithFormat:@"https://picsum.photos/seed/%d/2000/3000", arc4random() % 100];
         [picList addObject:picUrl];
     }
     self.dataArray = [NSArray arrayWithArray:picList];
+//    self.dataArray = @[];
     
     //创建视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64.0)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
-    
 }
 #pragma mark - TableView delegate & datasource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -75,8 +76,32 @@
     //给cell配置数据模版
     cell.textLabel.text = @"行内容";
     NSString *urlStr = [self.dataArray objectAtIndex:indexPath.row];
+    //赋值原图
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:urlStr]
                       placeholderImage:[UIImage imageNamed:@"icon_nav_about"]];
+    // 使用UIKit生成缩略图
+//    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+//    [manager loadImageWithURL:[NSURL URLWithString:urlStr] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+//            //
+//        } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+//            if (image) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    cell.imageView.image = [self ui_thumbnailWithImage:image size:CGSizeMake(44, 44)];
+//
+//                });
+//            }
+//        }];
+    // 使用CG生成缩略图
+//    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+//    [manager loadImageWithURL:[NSURL URLWithString:urlStr] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+//            //
+//        } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+//            if (image) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    cell.imageView.image = image;
+//                });
+//            }
+//        }];
     return cell;
 }
 
@@ -93,6 +118,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%ld", indexPath.row);
+//    [[SDImageCache sharedImageCache] clearMemory];
+//    [[SDWebImageManager sharedManager].imageCache clearMemory];
+   
+    for (int i=0; i<self.dataArray.count; i++) {
+        NSString *image_url = [self.dataArray objectAtIndex:i];
+        [[SDImageCache sharedImageCache] removeImageForKey:image_url fromDisk:YES withCompletion:^{
+            NSLog(@"comp");
+        }];
+    }
 }
 
 
@@ -105,5 +139,30 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (UIImage *)ui_thumbnailWithImage:(UIImage *)image size:(CGSize)asize{
+    UIGraphicsBeginImageContext(asize);
+    [image drawInRect:CGRectMake(0, 0, asize.width, asize.height)];
+    UIImage *newimage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newimage;
+}
+
++ (UIImage *)cg_thumbnailWithImage:(UIImage *)image size:(CGSize)size
+{
+    CGFloat scale = MAX(size.width/image.size.width, size.height/image.size.height);
+    CGFloat width = image.size.width * scale;
+    CGFloat height = image.size.height * scale;
+    CGRect imageRect = CGRectMake((size.width - width)/2.0f,
+                                  (size.height - height)/2.0f,
+                                  width,
+                                  height);
+
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    [image drawInRect:imageRect];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 
 @end

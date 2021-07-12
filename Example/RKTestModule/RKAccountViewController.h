@@ -6,11 +6,11 @@
 //  Copyright © 2020 beedroid. All rights reserved.
 //
 
-#import <QMUIKit/QMUIKit.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RKAccountViewController : QMUICommonViewController
+@interface RKAccountViewController : UIViewController
 
 @end
 

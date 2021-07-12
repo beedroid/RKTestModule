@@ -23,28 +23,27 @@
 }
 
 - (void)setupNavigationItems {
-    [super setupNavigationItems];
     self.title = @"内存管理";
-    QMUIButton *testBigImageButton = [QMUIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *testBigImageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     testBigImageButton.frame = CGRectMake(20, 88, 200, 50);
     [testBigImageButton setTitle:@"大图内存管理" forState:UIControlStateNormal];
     [testBigImageButton addTarget:self action:@selector(testBigImage) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:testBigImageButton];
     
-    QMUIButton *heapButton = [QMUIButton buttonWithType:UIButtonTypeRoundedRect];
-    heapButton.frame = CGRectMake(20, 88+100, 200, 50);
+    UIButton *heapButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    heapButton.frame = CGRectMake(20, 88+50, 200, 50);
     [heapButton setTitle:@"堆内存管理" forState:UIControlStateNormal];
     [heapButton addTarget:self action:@selector(rk_heap) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:heapButton];
     
-    QMUIButton *cacheButton = [QMUIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *cacheButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     cacheButton.frame = CGRectMake(20, 88+100, 200, 50);
     [cacheButton setTitle:@"缓存" forState:UIControlStateNormal];
     [cacheButton addTarget:self action:@selector(rk_cache) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cacheButton];
     
-    QMUIButton *stackButton = [QMUIButton buttonWithType:UIButtonTypeRoundedRect];
-    stackButton.frame = CGRectMake(20, 88+100, 200, 50);
+    UIButton *stackButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    stackButton.frame = CGRectMake(20, 88+150, 200, 50);
     [stackButton setTitle:@"缓存" forState:UIControlStateNormal];
     [stackButton addTarget:self action:@selector(rk_stack) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:stackButton];

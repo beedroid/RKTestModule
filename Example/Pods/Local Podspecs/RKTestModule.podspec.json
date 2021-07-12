@@ -20,11 +20,12 @@
   },
   "source_files": "RKTestModule/Classes/**/*",
   "public_header_files": "Pod/Classes/**/*.h",
+  "frameworks": [
+    "UIKit",
+    "MapKit"
+  ],
   "dependencies": {
-    "Masonry": [
-
-    ],
-    "JLRoutes": [
+    "AFNetworking": [
 
     ],
     "JSONModel": [

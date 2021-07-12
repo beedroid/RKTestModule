@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <QMUIKit/QMUICommonViewController.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RKHomeViewController : QMUICommonViewController
+@interface RKHomeViewController : UIViewController
 
 @end
 

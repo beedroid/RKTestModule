@@ -6,7 +6,18 @@
 //
 
 #import "RKTestViewController.h"
-#import <JLRoutes/JLRoutes.h>
+#import "RKDefines.h"
+
+//@RKModule(HomeModule)
+//@RKModule(ChatModule)
+//@RKModule(ContactsModule)
+//@RKModule(DiscoverModule)
+//@RKModule(MineModule)
+//@RKModule(AAModule)
+//char * kAModule_module __attribute((used, section("__DATA,""RKModules"" "))) = """b""";
+// char * kBModule_module __attribute((used, section("__DATA,""RKModules"" "))) = """b1""";
+// char * kCModule_module __attribute((used, section("__DATA,""RKModules"" "))) = """b2""";
+//@RKModule(RKTechModule)
 
 @interface RKTestViewController ()
 
@@ -21,11 +32,6 @@
     UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 100, 50)];
     [label setTextColor:[UIColor redColor]];
     [label setFont:[UIFont systemFontOfSize:18]];
-    if ([[JLRoutes globalRoutes] canRouteURL:[NSURL URLWithString:@"aaa"]]) {
-        [label setText:@"能"];
-    }else{
-        [label setText:@"不能"];
-    }
     [self.view addSubview:label];
 }
 

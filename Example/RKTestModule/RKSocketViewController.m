@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor qmui_randomColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     UIButton *createButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     createButton.frame = CGRectMake(20, 88, 200, 50);
     [createButton setTitle:@"CONNECT" forState:UIControlStateNormal];
@@ -47,7 +47,6 @@
 }
 
 - (void)setupNavigationItems {
-    [super setupNavigationItems];
     self.title = @"Network";
 }
 

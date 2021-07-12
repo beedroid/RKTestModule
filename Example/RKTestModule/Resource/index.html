@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div style="margin-top: 20px">
+            <input type="button" value="打印UUID" onclick="changeText()">
+        </div>
+        <a onclick = "pushToVC()" href="">点击跳转首页</a>
+        <script>
+            
+            var changeText = function()
+            {
+                window.webkit.messageHandlers.Native.postMessage('changeText');
+            }
+        var changeButtonWithText = function(str)
+        {
+            document.getElementById("Id1").innerText = str;
+        }
+            var alertShow = function(str)
+            {
+                alert(str);
+            }
+            var changeColor = function ()
+            {
+                document.getElementById("Id1").style.color = '#ff9900';
+            }
+        var pushToVC = function()
+            {
+                window.webkit.messageHandlers.Native.postMessage('pushVC');
+            }
+        </script>
+    </body>
+</html>

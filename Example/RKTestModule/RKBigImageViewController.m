@@ -7,6 +7,7 @@
 //
 
 #import "RKBigImageViewController.h"
+#import <RKBaseModule/RKGlobalValue.h>
 #import <UIImageView+WebCache.h>
 
 #define RKRandNum(i) arc4random()%i   // [0,i) 范围内随机数
@@ -20,10 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-}
-
-- (void)setupNavigationItems {
-    [super setupNavigationItems];
     self.title = @"大图加载列表";
 }
 
@@ -75,7 +72,7 @@
     //https://picsum.photos/200/300
     UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:1001];
     UILabel *titleLabel = (UILabel *)[cell.contentView viewWithTag:1002];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://picsum.photos/1200/1200?random=%d", RKRandNum(999)]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://picsum.photos/2200/2200?random=%d", RKRandNum(999)]];
     [imageView sd_setImageWithURL:url
                  placeholderImage:nil
                           options:SDWebImageCacheMemoryOnly

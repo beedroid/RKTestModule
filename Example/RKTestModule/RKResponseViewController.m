@@ -7,7 +7,7 @@
 //
 
 #import "RKResponseViewController.h"
-#import <QMUIKit/QMUIKit.h>
+#import <UIKit/UIKit.h>
 
 @interface RKResponseTestView : UILabel
 @property (nonatomic, copy) NSString *name;
@@ -20,7 +20,7 @@
 @implementation RKResponseTestView
 - (id) initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
-        self.backgroundColor = [UIColor qmui_randomColor];
+        self.backgroundColor = [UIColor whiteColor];
         [self addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     }
     return self;
@@ -59,10 +59,6 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"响应链";
-}
-
-- (void)setupNavigationItems {
-    [super setupNavigationItems];
     RKResponseTestView *viewA = [[RKResponseTestView alloc] initWithFrame:CGRectMake(0, 88, 300, 200)];
     
     RKResponseTestView *viewA1 = [[RKResponseTestView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
